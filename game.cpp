@@ -9,27 +9,28 @@ void displayMenu(bool hasScissors, bool hasPushLawnmower, bool hasBatteryLawnmow
     cout << "2. Visit shop\n";
     cout << "3. Check balance\n";
     cout << "4. Quit\n";
-    cout << "What would you like to do: ";
+    cout << "What would you like to do?: ";
 }
 
-void displayShop(bool hasScissors, bool hasPushLawnmower, bool hasBatteryLawnmower, bool hasTeam)
+void displayShop(bool hasScissors, bool hasPushLawnmower, bool hasBatteryLawnmower, bool hasTeam, int balance)
 {
     cout << "\n--- Shop ---\n";
+    cout << "Your current balance is: $" << balance << "\n";
     if (!hasScissors)
     {
         cout << "1. Buy rusty scissors ($5)\n";
     }
     if (!hasPushLawnmower)
     {
-        cout << "2. Buy push lawnmower ($25)\n";
+        cout << "2. Buy push lawnmower ($50)\n";
     }
     if (!hasBatteryLawnmower)
     {
-        cout << "3. Buy battery-powered lawnmower ($100)\n";
+        cout << "3. Buy battery-powered lawnmower ($500)\n";
     }
     if (!hasTeam)
     {
-        cout << "4. Hire a landscaping team ($500)\n";
+        cout << "4. Hire a landscaping team ($1000)\n";
     }
     cout << "5. Exit shop\n";
     cout << "Choose an option: ";
@@ -45,8 +46,8 @@ int main()
     bool hasTeam = false;
     int earningRate = 1;
 
-    cout << "Welcome to Landscaper 2024\n";
-    cout << "You can cut lawns using just your teeth to earn money.\n";
+    cout << "Welcome to the Landscaping Business Game!\n";
+    cout << "You must find a way to earn money cutting grass to earn $5000. Better start with your teeth!\n";
 
     while (true)
     {
@@ -56,14 +57,20 @@ int main()
         switch (choice)
         {
         case 1:
-            cout << "You spent the day cutting lawns and earned $" << earningRate << ".\n";
             balance += earningRate;
+            cout << "You spent the day cutting lawns and earned $" << earningRate << ".\n";
+            cout << "Your current balance is: $" << balance << "\n";
+            if (balance >= 5000)
+            {
+                cout << "Congratulations! You've won the game with a balance of $" << balance << "!\n";
+                return 0;
+            }
             break;
         case 2:
             int shopChoice;
             while (true)
             {
-                displayShop(hasScissors, hasPushLawnmower, hasBatteryLawnmower, hasTeam);
+                displayShop(hasScissors, hasPushLawnmower, hasBatteryLawnmower, hasTeam, balance);
                 cin >> shopChoice;
 
                 if (shopChoice == 5)
@@ -87,12 +94,12 @@ int main()
                     }
                     break;
                 case 2:
-                    if (!hasPushLawnmower && balance >= 25)
+                    if (!hasPushLawnmower && balance >= 50)
                     {
                         cout << "You bought a push lawnmower!\n";
-                        balance -= 25;
+                        balance -= 50;
                         hasPushLawnmower = true;
-                        earningRate = 50;
+                        earningRate = 20;
                     }
                     else
                     {
@@ -100,12 +107,12 @@ int main()
                     }
                     break;
                 case 3:
-                    if (!hasBatteryLawnmower && balance >= 100)
+                    if (!hasBatteryLawnmower && balance >= 500)
                     {
                         cout << "You bought a battery-powered lawnmower!\n";
-                        balance -= 100;
+                        balance -= 500;
                         hasBatteryLawnmower = true;
-                        earningRate = 100;
+                        earningRate = 50;
                     }
                     else
                     {
@@ -113,12 +120,12 @@ int main()
                     }
                     break;
                 case 4:
-                    if (!hasTeam && balance >= 500)
+                    if (!hasTeam && balance >= 1000)
                     {
                         cout << "You hired a landscaping team!\n";
-                        balance -= 500;
+                        balance -= 1000;
                         hasTeam = true;
-                        earningRate = 250;
+                        earningRate = 100;
                     }
                     else
                     {
